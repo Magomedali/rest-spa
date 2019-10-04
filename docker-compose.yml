@@ -1,5 +1,8 @@
 version: '3'
 
+volumes:
+  api-mysql-data:
+
 services:
   frontend-nginx:
     build:
@@ -16,3 +19,43 @@ services:
       - ./frontend:/var/www/frontend
     working_dir: /var/www/frontend
     tty: true
+
+  api-nginx:
+    build:
+      context: api/docker/dev
+      dockerfile: nginx.docker
+    volumes:
+      - ./api:/var/www/api
+    ports:
+      - "8008:80"
+    depends_on:
+      - api-php-fpm
+
+  api-php-fpm:
+    build:
+      context: api/docker/dev
+      dockerfile: php-fpm.docker
+    volumes:
+      - ./api:/var/www/api
+
+  api-php-cli:
+    build:
+      context: api/docker/dev
+      dockerfile: php-cli.docker
+    volumes:
+      - ./api:/var/www/api
+    working_dir: /var/www/api
+    tty: true
+
+  api-mysql:
+    image: mysql:5.6
+    ports:
+      - "36060:3606"
+    restart: always
+    volumes:
+      - api-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: microshop
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_USER: ali
+      MYSQL_PASS: 12345
