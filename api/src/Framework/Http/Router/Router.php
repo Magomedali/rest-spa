@@ -28,6 +28,6 @@ interface Router
 	 *
 	 * @param RouterData $data
 	*/
-	public function addRoute(RouteData $data):void;
+	public function addRoute(RouterData $data):void;
 
 }

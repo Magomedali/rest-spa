@@ -18,5 +18,8 @@
 		"psr-4":{
 			"Framework\\":"src/Framework/"
 		}
+	},
+	"scripts":{
+		"tests":"vendor/bin/phpunit"
 	}
 }

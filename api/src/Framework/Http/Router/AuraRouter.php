@@ -4,8 +4,9 @@ namespace Framework\Http\Router;
 use Aura\Router\Route;
 use Aura\Router\RouterContainer;
 use Aura\Router\Exception\RouteNotFound;
-use Framework\Http\Router\RequestNotMatchedException;
-use Framework\Http\Router\RouterNotFoundException;
+use Psr\Http\Message\ServerRequestInterface;
+use Framework\Http\Router\Exception\RequestNotMatchedException;
+use Framework\Http\Router\Exception\RouterNotFoundException;
 
 class AuraRouter implements Router
 {
@@ -62,7 +63,7 @@ class AuraRouter implements Router
 	/**
 	 * @param RouterData $data
 	*/
-	public function addRoute(RouteData $data):void
+	public function addRoute(RouterData $data):void
 	{
 
 		$route = new Route();
