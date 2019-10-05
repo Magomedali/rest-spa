@@ -5,6 +5,7 @@
 	"require": {
 		"php": ">=7.2.0",
 		"aura/router": "^3.1",
+		"dasprid/container-interop-doctrine": "^1.1",
 		"doctrine/migrations": "^2.1",
 		"doctrine/orm": "^2.6",
 		"fzaninotto/faker": "^1.8",
