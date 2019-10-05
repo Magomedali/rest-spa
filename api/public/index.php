@@ -5,8 +5,7 @@ use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
 use Psr\Http\Message\ServerRequestInterface;
 use Aura\Router\RouterContainer;
 
-use Framework\Http\Application;
-use Framework\Http\Router\AuraRouter;
+use Infrastructure\Framework\Http\ApplicationFactory;
 
 use App\Http\Api\Product\GenerateAction;
 use App\Http\Api\Product\ListAction;
@@ -18,9 +17,7 @@ require "vendor/autoload.php";
 
 $request = ServerRequestFactory::fromGlobals();
 
-$router = new AuraRouter(new RouterContainer());
-
-$app = new Application($router);
+$app = (new ApplicationFactory())();
 
 $app->get('list','/',new ListAction());
 $app->get('generate','/generate',new GenerateAction());
