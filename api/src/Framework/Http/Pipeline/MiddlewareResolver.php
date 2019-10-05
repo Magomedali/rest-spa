@@ -11,12 +11,14 @@ use Zend\Stratigility\MiddlewarePipe;
 
 class MiddlewareResolver
 {
+    private $container;
 
     private $responsePrototype;
 
 
-    public function __construct(ResponseInterface $responsePrototype)
+    public function __construct(ContainerInterface $container,ResponseInterface $responsePrototype)
     {
+        $this->container = $container;
         $this->responsePrototype = $responsePrototype;
     }
 
@@ -27,6 +29,10 @@ class MiddlewareResolver
             return $this->createPipe($handler);
         }
 
+        if (\is_string($handler) && $this->container->has($handler)) {
+            return new LazyMiddlewareDecorator($this, $this->container, $handler);
+        }
+        
         if ($handler instanceof MiddlewareInterface) {
             return $handler;
         }

@@ -48,11 +48,6 @@ class Application implements RequestHandlerInterface
         $this->default = $default;
 	}
 
-
-    public function getRouter(): Router
-    {
-        return $this->router;
-    }
     
 
     public function pipe($path, $middleware = null): void

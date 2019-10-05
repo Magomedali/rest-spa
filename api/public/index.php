@@ -1,28 +1,16 @@
 <?php
-use Zend\Diactoros\ServerRequestFactory;
-use Zend\Diactoros\Response\JsonResponse;
+use Framework\Http\Application;
 use Zend\HttpHandlerRunner\Emitter\SapiEmitter;
-use Psr\Http\Message\ServerRequestInterface;
-use Aura\Router\RouterContainer;
-
-use Infrastructure\Framework\Http\ApplicationFactory;
-
-use App\Http\Action\Api\Product\GenerateAction;
-use App\Http\Action\Api\Product\ListAction;
-use App\Http\Action\Api\Product\BuyAction;
-
+use Zend\Diactoros\ServerRequestFactory;
 
 chdir(dirname(__DIR__));
 require "vendor/autoload.php";
 
-$app = (new ApplicationFactory())();
+$container = require 'config/container.php';
+$app = $container->get(Application::class);
 
-$app->get('list','/',new ListAction());
-$app->get('generate','/generate',new GenerateAction());
-$app->post('buy','/buy/{id}',new BuyAction(),['tokens'=>['id'=>'\d+']]);
-
-$app->pipe(new \App\Http\Middleware\CredentialsMiddleware());
-$app->pipe(new \Framework\Http\Middleware\RouteMiddleware($app->getRouter()));
+require 'config/pipeline.php';
+require 'config/routes.php';
 
 $request = ServerRequestFactory::fromGlobals();
 $response = $app->handle($request);
