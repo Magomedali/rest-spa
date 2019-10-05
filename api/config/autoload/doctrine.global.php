@@ -1,6 +1,7 @@
 <?php
 
 use App\Module\Sale\Entity\Product;
+use App\Module\Sale\Entity\Order;
 use Doctrine\DBAL\Connection;
 
 return [
@@ -44,7 +45,8 @@ return [
         ],
         'types'=>[
             Product\NameType::NAME => Product\NameType::class,
-            Product\PriceType::NAME => Product\PriceType::class
+            Product\PriceType::NAME => Product\PriceType::class,
+            Order\CostType::NAME => Order\CostType::class
         ],
         'cache' => [
             'filesystem' => [
