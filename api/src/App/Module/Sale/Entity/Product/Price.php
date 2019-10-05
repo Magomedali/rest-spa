@@ -9,7 +9,7 @@ class Price
 
 	public function __construct(int $price)
 	{
-		$this->value = $price
+		$this->value = $price;
 	}
 
 	public function getValue()
