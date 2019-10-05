@@ -8,6 +8,10 @@ use Aura\Router\RouterContainer;
 use Framework\Http\Application;
 use Framework\Http\Router\AuraRouter;
 
+use App\Http\Api\Product\GenerateAction;
+use App\Http\Api\Product\ListAction;
+use App\Http\Api\Product\BuyAction;
+
 
 chdir(dirname(__DIR__));
 require "vendor/autoload.php";
@@ -18,9 +22,9 @@ $router = new AuraRouter(new RouterContainer());
 
 $app = new Application($router);
 
-$app->get('version','/',function(ServerRequestInterface $request){
-	return new JsonResponse(['version'=>'1.0.0'],200);
-});
+$app->get('list','/',new ListAction());
+$app->get('generate','/generate',new GenerateAction());
+$app->post('buy','/buy/{id}',new BuyAction(),['tokens'=>['id'=>'\d+']]);
 
 $response = $app->handle($request);
 
