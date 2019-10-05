@@ -38,21 +38,29 @@ class Product
     }
 
 
+    /**
+    * @return int $id
+    */
     public function getId(): int
     {
         return $this->id;
     }
 
 
+    /**
+    * @return Name $name
+    */
     public function getName(): Name
     {
         return $this->name;
     }
 
-
+    /**
+    * @return Price $price
+    */
     public function getPrice(): Price
     {
-        return $this->Price;
+        return $this->price;
     }
 
 }
