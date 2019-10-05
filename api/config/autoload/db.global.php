@@ -2,7 +2,7 @@
 return [
     'dependencies' => [
         'factories' => [
-            PDO::class => Infrastructure\App\PDOFactory::class,
+            PDO::class => Infrastructure\App\PDOFactory::class
         ]
     ],
     'pdo' => [
