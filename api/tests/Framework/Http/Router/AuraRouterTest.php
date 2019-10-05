@@ -5,7 +5,7 @@ use Framework\Http\Router\Exception\RequestNotMatchedException;
 use Framework\Http\Router\Exception\RouterNotFoundException;
 use Framework\Http\Router\AuraRouter;
 use Framework\Http\Router\Router;
-use Framework\Http\Router\RouterData;
+use Framework\Http\Router\RouteData;
 use Psr\Http\Message\ServerRequestInterface;
 use Aura\Router\RouterContainer;
 use PHPUnit\Framework\TestCase;
@@ -19,8 +19,8 @@ class AuraRouterTest extends TestCase
 	{
 		$router = $this->buildRouter();
 
-		$router->addRoute($getData = new RouterData('product','/product','get_product_handler',['GET'],[]));
-		$router->addRoute($postData = new RouterData('product_edit','/product','edit_product_handler',['POST'],[]));
+		$router->addRoute($getData = new RouteData('product','/product','get_product_handler',['GET'],[]));
+		$router->addRoute($postData = new RouteData('product_edit','/product','edit_product_handler',['POST'],[]));
 
 		$result = $router->match($this->buildRequest('GET','/product'));
 		$this->assertEquals($getData->name,$result->getName());
@@ -37,7 +37,7 @@ class AuraRouterTest extends TestCase
 	{
 		$router = $this->buildRouter();
 
-		$router->addRoute($getData = new RouterData('product','/product','get_product_handler',['GET'],[]));
+		$router->addRoute($getData = new RouteData('product','/product','get_product_handler',['GET'],[]));
 
 		$this->expectException(RequestNotMatchedException::class);
 		$router->match($this->buildRequest('DELETE','/product'));
@@ -49,7 +49,7 @@ class AuraRouterTest extends TestCase
 	{
 		$router = $this->buildRouter();
 
-		$router->addRoute($getData = new RouterData('product','/product/{id}','get_product_handler',['GET'],['tokens'=>['id'=>'\d+']]));
+		$router->addRoute($getData = new RouteData('product','/product/{id}','get_product_handler',['GET'],['tokens'=>['id'=>'\d+']]));
 
 		$result = $router->match($this->buildRequest('GET','/product/2'));
 
@@ -63,7 +63,7 @@ class AuraRouterTest extends TestCase
 	{
 		$router = $this->buildRouter();
 
-		$router->addRoute($getData = new RouterData('product','/product/{id}','get_product_handler',['GET'],['tokens'=>['id'=>'\d+']]));
+		$router->addRoute($getData = new RouteData('product','/product/{id}','get_product_handler',['GET'],['tokens'=>['id'=>'\d+']]));
 
 		$this->expectException(RequestNotMatchedException::class);
 		$result = $router->match($this->buildRequest('GET','/product'));

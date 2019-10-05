@@ -2,7 +2,7 @@
 namespace Framework\Http\Router;
 
 
-class RouterData
+class RouteData
 {
 
 	/**

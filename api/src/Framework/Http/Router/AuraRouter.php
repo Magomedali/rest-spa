@@ -61,9 +61,9 @@ class AuraRouter implements Router
 
 
 	/**
-	 * @param RouterData $data
+	 * @param RouteData $data
 	*/
-	public function addRoute(RouterData $data):void
+	public function addRoute(RouteData $data):void
 	{
 
 		$route = new Route();
