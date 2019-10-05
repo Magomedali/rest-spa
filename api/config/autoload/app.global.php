@@ -13,7 +13,8 @@ return [
         'factories' => [
             Application::class => Infrastructure\Framework\Http\ApplicationFactory::class,
             Router::class => Infrastructure\Framework\Http\Router\AuraRouterFactory::class,
-            MiddlewareResolver::class => Infrastructure\Framework\Http\Pipeline\MiddlewareResolverFactory::class
+            MiddlewareResolver::class => Infrastructure\Framework\Http\Pipeline\MiddlewareResolverFactory::class,
+            Faker\Generator::class => Infrastructure\App\FakerFactory::class
         ],
     ],
     'debug' => false,
