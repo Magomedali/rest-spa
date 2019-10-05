@@ -35,19 +35,19 @@ class ProductRepository
 
 	public function add(Product $product): void
 	{
-		$this->em->persist($billing);
-		$this->em->flush($billing);
+		$this->em->persist($product);
+		$this->em->flush($product);
 	}
 
 	public function save(Product $product): void
 	{
-		$this->em->flush($billing);
+		$this->em->flush($product);
 	}
 
 	public function remove(Product $product): void
 	{
-		$this->em->remove($billing);
-		$this->em->flush($billing);
+		$this->em->remove($product);
+		$this->em->flush($product);
 	}
 	
 }
