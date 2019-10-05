@@ -17,6 +17,11 @@ class Cost
 		return $this->value;
 	}
 
+	public function isEqual(Cost $cost): bool
+	{
+		return $this->getValue() === $cost->getValue();
+	}
+
 	public function __toString()
 	{
 		return $this->getValue();

@@ -1,9 +1,10 @@
 <?php
 namespace App\Module\Sale\Entity\Order;
 
+use DateTimeImmutable;
+use DomainException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use DateTimeImmutable;
 use App\Module\Sale\Entity\EventTrait;
 use App\Module\Sale\Entity\Product\Product;
 
@@ -138,6 +139,34 @@ class Order
         $this->products->add($product);
 
         $this->cost = new Cost($this->cost->getValue() + $product->getPrice()->getValue());
+    }
+
+    /**
+     * @param Cost $sum
+     * @return void
+    */
+    public function pay(Cost $sum): void
+    {
+        if(!$this->isNew())
+        {
+            throw new DomainException("Order is already paid!");
+        }
+
+        if(!$this->getCost()->isEqual($sum))
+        {
+            throw new DomainException("Sum is not equals with order cost!");
+        }
+    }
+
+
+    /**
+     * @return void
+    */
+    public function confirmPay(): void
+    {
+        $this->status = self::STATUS_PAID;
+
+        $this->recordEvent(new Event\PaidEvent($this));
     }
 
 }
