@@ -19,7 +19,6 @@ return [
             Doctrine\Migrations\Tools\Console\Command\DiffCommand::class,
             Doctrine\Migrations\Tools\Console\Command\UpToDateCommand::class,
             Doctrine\Migrations\Tools\Console\Command\StatusCommand::class,
-            Doctrine\Migrations\Tools\Console\Command\VersionCommand::class,
         ],
         'cachePaths' => [
             'doctrine' => 'var/cache/doctrine',
