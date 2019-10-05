@@ -5,20 +5,65 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\JsonResponse;
+use Zend\Stratigility\MiddlewarePipe;
+use Zend\Stratigility\Middleware\PathMiddlewareDecorator;
+use Framework\Http\Pipeline\MiddlewareResolver;
 use Framework\Http\Router\Exception\RequestNotMatchedException;
 use Framework\Http\Router\RouteData;
 use Framework\Http\Router\Router;
 
+
 class Application implements RequestHandlerInterface
 {
 
+    /**
+     * @var MiddlewareResolver
+    */
+    private $resolver;
+
+
+    /**
+     * @var Router
+    */
     private $router;
 
 
-	public function __construct(Router $router)
+    /**
+     * @var MiddlewarePipe
+    */
+    private $pipeline;
+
+
+    /**
+     * @var RequestHandlerInterface
+    */
+    private $default;
+
+
+	public function __construct(MiddlewareResolver $resolver,Router $router,RequestHandlerInterface $default)
 	{
+        $this->resolver = $resolver;
         $this->router = $router;
+        $this->pipeline = new MiddlewarePipe();
+        $this->default = $default;
 	}
+
+
+    public function getRouter(): Router
+    {
+        return $this->router;
+    }
+    
+
+    public function pipe($path, $middleware = null): void
+    {
+        if ($middleware === null) {
+            $this->pipeline->pipe($this->resolver->resolve($path));
+        } else {
+            $this->pipeline->pipe(new PathMiddlewareDecorator($path, $this->resolver->resolve($middleware)));
+        }
+    }
+
 
     public function any($name, $path, $handler, array $options = []): void
     {
@@ -58,21 +103,15 @@ class Application implements RequestHandlerInterface
 
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
-		try {
-
-			$result = $this->router->match($request);
-			foreach ($result->getAttributes() as $attribute => $value) {
-				$request = $request->withAttribute($attribute,$value);
-			}
-
-			$action = $result->getHandler();
-			
-			return $action($request);
-		} catch (RequestNotMatchedException $e) {
-			return new JsonResponse(['error'=>'Undefained resourse'],404);
-		}
-		
+        return $this->pipeline->process($request, $this->default);
 	}
+
+
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        return $this->pipeline->process($request, $handler);
+    }
+
 
 	private function route($name, $path, $handler, array $methods, array $options = []): void
     {

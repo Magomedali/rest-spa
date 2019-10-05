@@ -31,6 +31,7 @@ class AuraRouter implements Router
 	*/
 	public function match(ServerRequestInterface $request): Result
 	{
+
 		$matcher = $this->aura->getMatcher();
 		if($route = $matcher->match($request))
 		{
