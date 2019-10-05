@@ -27,7 +27,7 @@ class Order
 
 
     /**
-     * @ORM\Column(type="datetime_immutable", name="create_at")
+     * @ORM\Column(type="datetime_immutable", name="created_at")
      */
     private $createdDate;
 
@@ -69,8 +69,10 @@ class Order
         $this->products = new ArrayCollection();
 
         foreach ($products as $product) {
-            
+            $this->addProduct($product);
         }
+
+        $this->recordEvent(new Event\CreatedEvent($this));
     }
 
 

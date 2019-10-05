@@ -8,6 +8,7 @@ return [
     'dependencies' => [
         'factories'  => [
             Doctrine\ORM\EntityManagerInterface::class => ContainerInteropDoctrine\EntityManagerFactory::class,
+            Doctrine\ORM\EntityManager::class => ContainerInteropDoctrine\EntityManagerFactory::class,
             Connection::class => ContainerInteropDoctrine\ConnectionFactory::class,
         ],
     ],
