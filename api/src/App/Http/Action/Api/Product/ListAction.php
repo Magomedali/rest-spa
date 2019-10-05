@@ -6,12 +6,23 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response\JsonResponse;
 
+use App\Module\Sale\Fetcher\Product;
+
 class ListAction implements RequestHandlerInterface
 {
 
+	private $fetcher;
+
+	public function __construct(Product\ProductFetcher $fetcher)
+	{
+		$this->fetcher = $fetcher;
+	}
+
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
-		return new JsonResponse(['handle'=>'Products list'],200);
+		$products = $this->fetcher->list(new Product\ProductFilter());
+
+		return new JsonResponse($products,200);
 	}
 
 	public function __invoke(ServerRequestInterface $request): ResponseInterface
