@@ -19,7 +19,10 @@ class ProductFetcher
 	}
 
 
-
+	/**
+	 * @param ProductFilter $filter
+	 * @return ProductView[]
+	*/
 	public function list(ProductFilter $filter): array
 	{
 		$queryBuilder = $this->connection->createQueryBuilder();
@@ -33,6 +36,10 @@ class ProductFetcher
 		return $stmt->fetchAll();
 	}
 
+
+	/**
+	 * @return string
+	*/
 	public static function tableName(): string
 	{
 		return "products";
