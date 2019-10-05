@@ -23,7 +23,7 @@ final class Version20191005130355 extends AbstractMigration
         
         $this->addSql('CREATE TABLE products (
             id INT(11) NOT NULL AUTO_INCREMENT
-            , title VARCHAR(50) NOT NULL
+            , name VARCHAR(50) NOT NULL
             , price int NOT NULL
             ,PRIMARY KEY (`id`))'
         );
