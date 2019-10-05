@@ -24,17 +24,24 @@ final class Version20191005130355 extends AbstractMigration
         $this->addSql('CREATE TABLE products (
             id INT(11) NOT NULL AUTO_INCREMENT
             , name VARCHAR(50) NOT NULL
-            , price int NOT NULL
+            , price INT NOT NULL
             ,PRIMARY KEY (`id`))'
         );
         
         $this->addSql('CREATE TABLE orders (
             id INT(11) NOT NULL AUTO_INCREMENT
-            , product_id INTEGER NOT NULL
             , created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            , cost INT NOT NULL
             , status TINYINT NOT NULL DEFAULT 0
-            , PRIMARY KEY (`id`)
-            , FOREIGN KEY (`product_id`) references products (`id`))'
+            , PRIMARY KEY (`id`))'
+        );
+
+        $this->addSql('CREATE TABLE order_products (
+              order_id   INT(11) NOT NULL
+            , product_id INT(11) NOT NULL
+            , FOREIGN KEY (`product_id`) references products (`id`)
+            , FOREIGN KEY (`order_id`) references orders (`id`)
+            , UNIQUE KEY uk_order_product (`product_id`,`order_id`))'
         );
 
     }
@@ -43,6 +50,7 @@ final class Version20191005130355 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('DROP TABLE order_products');
         $this->addSql('DROP TABLE orders');
         $this->addSql('DROP TABLE products');
     }
