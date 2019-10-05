@@ -1,27 +1,46 @@
 <?php
 namespace App\Module\Sale\UseCase\Product\Generate;
 
-Use App\Module\Sale\Entity\Product;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Module\Sale\Entity\Product;
+use Faker\Generator;
 
 class Handler
 {
 
 	/**
-	* @var Product\ProductRepository
+	* @var EntityManagerInterface
 	*/
-	private $repository;
+	private $manager;
+
+	/**
+	* @var Faker\Generator
+	*/
+	private $faker;
 
 
-	public function __construct(
-		Product\ProductRepository $repository
-	)
+	public function __construct(EntityManagerInterface $manager,Generator $faker)
 	{
-		$this->repository = $repository;
+		$this->manager = $manager;
+		$this->faker = $faker;
 	}
 
 
+	/**
+	 * @param Command
+	*/
 	public function handle(Command $command)
 	{
+        
+        for ($i = 0; $i < $command->getCount(); $i++) {
+            $product = new Product\Product(
+                new Product\Name($this->faker->name),
+                new Product\Price($this->faker->randomNumber(5))
+            );
 
+            $this->manager->persist($product);
+        }
+        
+        $this->manager->flush();
 	}
 }

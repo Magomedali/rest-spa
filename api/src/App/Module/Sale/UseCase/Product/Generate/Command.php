@@ -11,7 +11,7 @@ class Command
 	private $count;
 
 
-	public function __construct(int $count)
+	public function __construct(int $count = 20)
 	{
 		$this->count = $count;
 	}
