@@ -29,6 +29,7 @@ class ProductFetcher
 
 		$stmt = $queryBuilder->select("*")
 					->from(self::tableName())
+					->orderBy('id','DESC')
 					->execute();
 
 		$stmt->setFetchMode(FetchMode::CUSTOM_OBJECT, ProductView::class);
