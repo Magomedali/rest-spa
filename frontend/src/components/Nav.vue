@@ -18,16 +18,12 @@
         </ul>
       </div>
     </div>
-  	</nav>
+  </nav>
 </template>
 
 <script>
 
 export default {
-	name: 'Nav',
-
-	methods: {
-
-	}
+	name: 'Nav'
 }
 </script>
