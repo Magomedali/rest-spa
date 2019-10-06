@@ -18,7 +18,6 @@
 			{
 				this.$router.push({name: 'catalog'});
 			}
-
 			this.$store.commit('clearOrder');
 		},
 		methods: {
