@@ -20,8 +20,9 @@ class ListAction implements RequestHandlerInterface
 
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
+	
 		$products = $this->fetcher->list(new Product\ProductFilter());
-
+	
 		return new JsonResponse($products,200);
 	}
 

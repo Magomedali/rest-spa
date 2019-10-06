@@ -2,6 +2,8 @@
 
 use Framework\Http\Application;
 use Framework\Http\Pipeline\MiddlewareResolver;
+use Framework\Http\Middleware\ErrorHandler\ErrorResponseGenerator;
+use Framework\Http\Middleware\ErrorHandler\ErrorHandlerMiddleware;
 use Framework\Http\Router\Router;
 
 
@@ -16,7 +18,10 @@ return [
             MiddlewareResolver::class => Infrastructure\Framework\Http\Pipeline\MiddlewareResolverFactory::class,
             Faker\Generator::class => Infrastructure\App\FakerFactory::class,
             App\Dispatcher\EventDispatcher::class => Infrastructure\App\Dispatcher\EventDispatcherFactory::class,
-            App\Service\PaymentService::class => Infrastructure\App\Service\PaymentServiceFactory::class
+            App\Service\PaymentService::class => Infrastructure\App\Service\PaymentServiceFactory::class,
+            ErrorHandlerMiddleware::class => Infrastructure\Framework\Http\Middleware\ErrorHandler\ErrorHandlerMiddlewareFactory::class,
+            ErrorResponseGenerator::class => Infrastructure\Framework\Http\Middleware\ErrorHandler\PrettyErrorResponseGeneratorFactory::class,
+            Psr\Log\LoggerInterface::class => Infrastructure\App\Logger\LoggerFactory::class
         ]
     ],
     'debug' => false,

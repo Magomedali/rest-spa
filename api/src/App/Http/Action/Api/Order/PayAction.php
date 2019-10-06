@@ -22,17 +22,12 @@ class PayAction implements RequestHandlerInterface
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 
-		try {
-			$command = $this->deserialize($request);
+		$command = $this->deserialize($request);
 
-			$this->handler->handle($command);
+		$this->handler->handle($command);
 
-			return new JsonResponse(['success'=>true],200);
-			
-		} catch (\Exception $e) {
-
-			return new JsonResponse(['error'=>$e->getMessage()],500);
-		}
+		return new JsonResponse(['success'=>true],200);
+		
 	}
 
 	public function __invoke(ServerRequestInterface $request): ResponseInterface

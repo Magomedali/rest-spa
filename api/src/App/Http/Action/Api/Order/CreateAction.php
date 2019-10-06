@@ -23,20 +23,13 @@ class CreateAction implements RequestHandlerInterface
 
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
-
-		try {
 			
-			$command = $this->deserialize($request);
+		$command = $this->deserialize($request);
 
-			$id = $this->handler->handle($command);
+		$id = $this->handler->handle($command);
 
-			return new JsonResponse(['id'=>$id],200);
+		return new JsonResponse(['id'=>$id],200);
 			
-		} catch (\Exception $e) {
-
-			return new JsonResponse(['error'=>$e->getMessage()],500);
-		}
-		
 	}
 
 

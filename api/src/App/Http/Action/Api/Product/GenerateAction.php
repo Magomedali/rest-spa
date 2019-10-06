@@ -22,13 +22,9 @@ class GenerateAction implements RequestHandlerInterface
 	{
 		$command = new Generate\Command();
 
-		try {
-			$this->handler->handle($command);
-			return new JsonResponse(['success'=>true],200);
-		} catch (\Exception $e) {
-			return new JsonResponse(['error'=>$e->getMessage()],500);
-		}
-
+		$this->handler->handle($command);
+		
+		return new JsonResponse(['success'=>true],200);
 	}
 
 	public function __invoke(ServerRequestInterface $request): ResponseInterface

@@ -15,7 +15,7 @@ class Command
 	{
 		if(empty($ids))
 		{
-			throw new \InvalidArgumentException("Products ids are empty");
+			throw new \LogicException("Products ids are empty");
 		}
 
 		$this->ids = $ids;
