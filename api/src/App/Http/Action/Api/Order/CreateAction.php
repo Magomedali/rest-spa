@@ -20,13 +20,13 @@ class CreateAction implements RequestHandlerInterface
 	}
 
 	
+
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 
-		$ids = $request->getParsedBody();
-
 		try {
-			$command = new Create\Command(is_array($ids) ? $ids : []);
+			
+			$command = $this->deserialize($request);
 
 			$id = $this->handler->handle($command);
 
@@ -40,8 +40,18 @@ class CreateAction implements RequestHandlerInterface
 	}
 
 
+
 	public function __invoke(ServerRequestInterface $request): ResponseInterface
 	{
 		return $this->handle($request);
 	}
+
+
+
+	private function deserialize(ServerRequestInterface $request): Create\Command
+    {
+        $ids = $request->getParsedBody();
+
+        return new Create\Command(is_array($ids) ? $ids : []);
+    }
 }

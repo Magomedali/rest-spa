@@ -22,10 +22,8 @@ class PayAction implements RequestHandlerInterface
 	public function handle(ServerRequestInterface $request): ResponseInterface
 	{
 
-		$body = $request->getParsedBody();
-
 		try {
-			$command = new Pay\Command($body['id'],$body['sum']);
+			$command = $this->deserialize($request);
 
 			$this->handler->handle($command);
 
@@ -41,4 +39,11 @@ class PayAction implements RequestHandlerInterface
 	{
 		return $this->handle($request);
 	}
+
+
+	private function deserialize(ServerRequestInterface $request): Pay\Command
+    {
+        $body = $request->getParsedBody();
+        return new Pay\Command($body['id'],$body['sum']);
+    }
 }
