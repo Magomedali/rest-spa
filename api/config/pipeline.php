@@ -8,4 +8,5 @@ $app->pipe(Middleware\CredentialsMiddleware::class);
 $app->pipe(Framework\Http\Middleware\BodyParamsMiddleware::class);
 $app->pipe(Middleware\ValidationExceptionMiddleware::class);
 $app->pipe(Framework\Http\Middleware\RouteMiddleware::class);
+$app->pipe(Middleware\BasicAuthMiddleware::class);
 $app->pipe(Framework\Http\Middleware\DispatchMiddleware::class);
