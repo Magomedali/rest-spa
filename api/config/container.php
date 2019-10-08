@@ -2,7 +2,12 @@
 
 use Zend\ServiceManager\ServiceManager;
 
-$config = require __DIR__ . '/config.php';
+if(defined('APP_TEST_MODE') && APP_TEST_MODE) {
+	$config = require __DIR__ . '/config-test.php';
+} else {
+	$config = require __DIR__ . '/config.php';
+}
+
 
 $container = new ServiceManager($config['dependencies']);
 

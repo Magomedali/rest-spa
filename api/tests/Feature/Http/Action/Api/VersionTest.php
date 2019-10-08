@@ -1,7 +1,8 @@
 <?php
 declare(strict_types=1);
-namespace Test\Feature;
+namespace Test\Feature\Http\Action\Api;
 
+use Test\Feature\WebTestCase;
 
 class VersionTest extends WebTestCase
 {
@@ -20,8 +21,8 @@ class VersionTest extends WebTestCase
     public function testSuccess(): void
     {
         $this->setServerParameters([
-            'PHP_AUTH_USER'=>'admin',
-            'PHP_AUTH_PW'=>'1',
+            'PHP_AUTH_USER'=>'tester',
+            'PHP_AUTH_PW'=>'12345',
         ]);
 
         $response = $this->get('/',[]);

@@ -1,0 +1,15 @@
+<?php
+
+return [
+    'auth' => [
+        'users' => [
+            'tester' => '12345',
+        ],
+    ],
+
+    'pdo' => [
+        'dsn' => 'mysql:host=api-mysql;dbname=test_db',
+        'username' => 'user',
+        'password' => 'pass',
+    ]
+];

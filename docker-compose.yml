@@ -59,3 +59,16 @@ services:
       MYSQL_ROOT_PASSWORD: 12345
       MYSQL_USER: ali
       MYSQL_PASS: 12345
+      
+  api-test-mysql:
+    image: mysql:5.6
+    ports:
+      - "36061:3606"
+    restart: always
+    volumes:
+      - api-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: microshop_test
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_USER: ali
+      MYSQL_PASS: 12345
