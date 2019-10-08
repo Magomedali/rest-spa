@@ -2,6 +2,7 @@ version: '3'
 
 volumes:
   api-mysql-data:
+  api-test-mysql-data:
 
 services:
   frontend-nginx:
@@ -66,7 +67,7 @@ services:
       - "36061:3606"
     restart: always
     volumes:
-      - api-mysql-data:/var/lib/mysql
+      - api-test-mysql-data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: microshop_test
       MYSQL_ROOT_PASSWORD: 12345
