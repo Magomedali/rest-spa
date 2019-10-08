@@ -8,3 +8,6 @@ init: down up
 
 php-cli:
 	docker-compose run --rm api-php-cli bash
+
+api-test:
+	docker-compose run --rm api-php-cli composer tests
