@@ -149,12 +149,12 @@ class Order
     {
         if(!$this->isNew())
         {
-            throw new DomainException("Order is already paid!");
+            throw new DomainException('Order is already paid!');
         }
 
         if(!$this->getCost()->isEqual($sum))
         {
-            throw new DomainException("Sum is not equals with order cost!");
+            throw new DomainException('Sum is not equals with order cost!');
         }
     }
 
