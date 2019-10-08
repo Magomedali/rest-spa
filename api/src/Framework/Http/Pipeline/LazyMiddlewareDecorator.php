@@ -10,7 +10,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 final class LazyMiddlewareDecorator implements MiddlewareInterface
 {
     private $resolver;
+
     private $container;
+
     private $service;
 
     public function __construct(MiddlewareResolver $resolver, ContainerInterface $container, string $service)
@@ -19,6 +21,7 @@ final class LazyMiddlewareDecorator implements MiddlewareInterface
         $this->container = $container;
         $this->service = $service;
     }
+    
     
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler) : ResponseInterface
     {
