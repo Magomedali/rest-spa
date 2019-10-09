@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace App\Module\Sale\Entity\Product;
 
 use Doctrine\ORM\Mapping as ORM;

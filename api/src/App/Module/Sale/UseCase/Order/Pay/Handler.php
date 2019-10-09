@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace App\Module\Sale\UseCase\Order\Pay;
 
 use App\Module\Sale\Entity\Order;
