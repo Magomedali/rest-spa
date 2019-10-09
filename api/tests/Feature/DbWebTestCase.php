@@ -29,6 +29,8 @@ class DbWebTestCase extends WebTestCase
         $purger = new ORMPurger($this->em);
         $purger->purge();
 
+        $this->em->clear();
+        
         parent::tearDown();
     }
 
