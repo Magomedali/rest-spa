@@ -85,6 +85,31 @@ class PayActionTest extends DbWebTestCase
 
 
 
+
+    public function testErrorPay()
+    {   
+        $order = $this->getOrder();
+        
+        $this->mockPayService->method('pay')
+                                    ->willReturn(false);
+
+        $this->getContainer()->setFactory(PaymentService::class, function() { return $this->mockPayService; });    
+        $response = $this->post('/pay',['id'=>$order->getId(),'sum'=>$order->getCost()->getValue()]);
+
+        self::assertEquals(500,$response->getStatusCode());
+        self::assertJson($content = $response->getBody()->getContents());
+
+        
+        $data = json_decode($content,true);
+
+        self::assertEquals([
+             'error'=>'Specific payment error'
+        ],$data);
+
+    }
+
+
+
     private function getOrder(): Order\Order
     {
         return $this->getFixture('order')->getOrder();

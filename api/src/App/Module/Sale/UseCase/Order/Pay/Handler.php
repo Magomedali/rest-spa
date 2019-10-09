@@ -4,6 +4,7 @@ namespace App\Module\Sale\UseCase\Order\Pay;
 use App\Module\Sale\Entity\Order;
 use App\Dispatcher\EventDispatcher;
 use App\Service\PaymentService;
+use App\Service\Exception\ErrorPaymentException;
 
 class Handler
 {
@@ -42,7 +43,10 @@ class Handler
         
         $order->pay(new Order\Cost($command->getSum()));
 
-        $this->payment->pay($order->getId(),$command->getSum());
+        if(!$this->payment->pay($order->getId(),$command->getSum()))
+        {
+        	throw new ErrorPaymentException("Specific payment error",500);
+        }
 
         $order->confirmPay();
 
