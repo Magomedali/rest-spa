@@ -12,6 +12,9 @@
         <testsuite name="feature">
             <directory>./tests/Feature</directory>
         </testsuite>
+        <testsuite name="integration">
+            <directory>./tests/Integration</directory>
+        </testsuite>
         <testsuite name="unit">
             <directory>./tests/Unit</directory>
         </testsuite>
@@ -24,5 +27,8 @@
     </filter>
     <php>
       <const name="APP_TEST_MODE" value="true"/>
+      <const name="PAYMENT_SERVICE" value="https://ya.ru"/>
+      <const name="PAYMENT_SERVICE_ACCOUNT_ID" value="test"/>
+      <const name="PAYMENT_SERVICE_ACCOUNT_SECRET" value="test"/>
     </php>
 </phpunit>
