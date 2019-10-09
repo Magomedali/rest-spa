@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Test\Feature;
 
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
@@ -25,6 +26,10 @@ class WebTestCase extends TestCase
 
 	private $server = [];
 
+	private $app;
+
+	private $container;
+
 	protected function get(string $uri,array $headers = []): ResponseInterface
 	{
 		return $this->method($uri, 'GET', [], $headers);
@@ -35,6 +40,13 @@ class WebTestCase extends TestCase
 	protected function post(string $uri,array $params, array $headers = []): ResponseInterface
 	{
 		return $this->method($uri, 'POST', $params, $headers);
+	}
+
+
+
+	protected function put(string $uri,array $params, array $headers = []): ResponseInterface
+	{
+		return $this->method($uri, 'PUT', $params, $headers);
 	}
 
 
@@ -90,18 +102,22 @@ class WebTestCase extends TestCase
 
 	protected function loadFixtures(array $fixtures): void
     {
-        $container = $this->container();
+        $container = $this->getContainer();
         $em = $container->get(EntityManagerInterface::class);
         $loader = new Loader();
+        
         foreach ($fixtures as $name => $class) {
+            
             if ($container->has($class)) {
                 $fixture = $container->get($class);
             } else {
                 $fixture = new $class;
             }
+
             $loader->addFixture($fixture);
             $this->fixtures[$name] = $fixture;
         }
+
         $executor = new ORMExecutor($em, new ORMPurger($em));
         $executor->execute($loader->getFixtures());
     }
@@ -113,24 +129,55 @@ class WebTestCase extends TestCase
         if (!array_key_exists($name, $this->fixtures)) {
             throw new \InvalidArgumentException('Undefined fixture ' . $name);
         }
+        
         return $this->fixtures[$name];
     }
 
 
+    protected function authorize()
+    {
+    	$users = $this->getContainer()->get('config')['auth']['users'];
+    	
+    	if(!is_array($users)) {
+    		return;
+    	}
+
+    	$this->setServerParameter('PHP_AUTH_USER',key($users));
+    	$this->setServerParameter('PHP_AUTH_PW',current($users));
+    }
+
 
 	protected function app(): Application
 	{
-		$container = $this->container();
+
+		if($this->app)
+		{
+			return $this->app;
+		}
+
+		$container = $this->getContainer();
 		
 		$app = $container->get(Application::class);
 		
 		require 'config/pipeline.php';
 		require 'config/routes.php';
 
+		$this->app = $app;
+
 		return $app;
 	}
 
+	protected function getContainer(): ContainerInterface
+	{
+		if($this->container)
+		{
+			return $this->container;
+		}
 
+		$this->container = $this->container();
+
+		return $this->container;
+	}
 
 	private function container(): ContainerInterface
     {

@@ -20,10 +20,7 @@ class VersionTest extends WebTestCase
 
     public function testSuccess(): void
     {
-        $this->setServerParameters([
-            'PHP_AUTH_USER'=>'tester',
-            'PHP_AUTH_PW'=>'12345',
-        ]);
+        $this->authorize();
 
         $response = $this->get('/',[]);
         
