@@ -157,14 +157,7 @@ class Order
         {
             throw new DomainException('Sum is not equals with order cost!');
         }
-    }
 
-
-    /**
-     * @return void
-    */
-    public function confirmPay(): void
-    {
         $this->status = self::STATUS_PAID;
 
         $this->recordEvent(new Event\PaidEvent($this));

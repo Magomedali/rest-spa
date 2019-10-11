@@ -31,7 +31,7 @@ class OrderRepository
 
 	public function findById(int $id): ?Order
 	{
-		return $this->repository->findOneBy(['id'=>$id]) ?: null;
+		return $this->repository->find($id) ?: null;
 	}
 
 	public function add(Order $order): void

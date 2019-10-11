@@ -63,7 +63,6 @@ class OrderTest extends TestCase
 		self::assertFalse($order->isPaid());
 
 		$order->pay(new Order\Cost($product->getPrice()->getValue()));
-		$order->confirmPay();
 		
 		self::assertFalse($order->isNew());
 		self::assertTrue($order->isPaid());
@@ -93,7 +92,6 @@ class OrderTest extends TestCase
 
 		$order->addProduct($product);
 		$order->pay(new Order\Cost(250));
-		$order->confirmPay();
 
 		$this->expectExceptionMessage('Order is already paid!');
 		$order->pay(new Order\Cost(250));

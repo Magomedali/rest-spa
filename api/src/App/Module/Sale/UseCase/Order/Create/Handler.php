@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace App\Module\Sale\UseCase\Order\Create;
 
-use Doctrine\Common\Collections\ArrayCollection;
+
 use App\Module\Sale\Entity\Order;
 use App\Module\Sale\Entity\Product\ProductRepository;
 use App\Dispatcher\EventDispatcher;
@@ -40,13 +40,11 @@ class Handler
 	*/
 	public function handle(Command $command): int
 	{
-       
-        $products = new ArrayCollection();
-        foreach ($command->getIds() as $id) {
-        	$products->add($this->products->getById($id));
-        }
+
+        $products = $this->products->getCollectionByIds($command->getIds());
 
         $order = new Order\Order($products);
+        
         $this->orders->add($order);
         
         $this->eventDispatcher->dispatchAll($order->releaseEvents());

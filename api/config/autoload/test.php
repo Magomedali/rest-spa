@@ -8,7 +8,7 @@ return [
     ],
 
     'pdo' => [
-        'dsn' => 'mysql:host=api-test-mysql;dbname=microshop_test',
+        'dsn' => 'mysql:host=api-mysql;dbname=microshop',
         'username' => 'root',
         'password' => '12345',
     ],

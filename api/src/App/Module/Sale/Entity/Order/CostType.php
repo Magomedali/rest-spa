@@ -19,7 +19,7 @@ class CostType extends IntegerType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return new Cost($value);
+        return new Cost((int)$value);
     }
 
 

@@ -49,8 +49,6 @@ class Handler
         	throw new ErrorPaymentException("Specific payment error",500);
         }
 
-        $order->confirmPay();
-
         $this->orders->save($order);
 
         $this->eventDispatcher->dispatchAll($order->releaseEvents());

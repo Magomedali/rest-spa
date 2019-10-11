@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace App\Module\Sale\Entity\Product;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\ArrayCollection;
 use App\Module\Sale\Entity\Exception\NotFoundEntityException;
 
 class ProductRepository
@@ -29,10 +30,27 @@ class ProductRepository
         return $product;
 	}
 
+
+	public function getCollectionByIds(array $ids): ArrayCollection
+	{
+		$queryBuilder = $this->em->createQueryBuilder();
+
+		$query = $queryBuilder->select(['p'])
+						->from('App\Module\Sale\Entity\Product\Product','p')
+						->where($queryBuilder->expr()->in('p.id',$ids))
+						->getQuery();
+
+		$result = $query->getResult();
+
+		return new ArrayCollection($result);
+	}
+
+
 	public function findById(int $id): ?Product
 	{
-		return $this->repository->findOneBy(['id'=>$id]) ?: null;
+		return $this->repository->find($id) ?: null;
 	}
+
 
 	public function add(Product $product): void
 	{
@@ -40,10 +58,12 @@ class ProductRepository
 		$this->em->flush($product);
 	}
 
+
 	public function save(Product $product): void
 	{
 		$this->em->flush($product);
 	}
+
 
 	public function remove(Product $product): void
 	{

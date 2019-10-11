@@ -19,7 +19,7 @@ class PriceType extends IntegerType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return new Price($value);
+        return new Price((int)$value);
     }
 
 
