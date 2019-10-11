@@ -13,7 +13,7 @@ class Cost
 		$this->value = $cost;
 	}
 
-	public function getValue()
+	public function getValue(): int
 	{
 		return $this->value;
 	}

@@ -32,6 +32,6 @@ class Command
 
 	public function getSum(): int
 	{
-		return $this->sum;
+		return (int)$this->sum;
 	}
 }
