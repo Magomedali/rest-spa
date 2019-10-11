@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
-namespace App\Module\Sale\Entity\Order;
+namespace App\Module\Sale\Repository\Product;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\IntegerType;
+use App\Module\Sale\Entity\Product\Price;
 
-
-class CostType extends IntegerType
+class PriceType extends IntegerType
 {
-	const NAME = 'Type\Order\Cost';
+	const NAME = 'Type\Product\Price';
 
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
@@ -19,7 +19,7 @@ class CostType extends IntegerType
 
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {
-        return new Cost((int)$value);
+        return new Price((int)$value);
     }
 
 

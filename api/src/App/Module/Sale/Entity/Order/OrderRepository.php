@@ -2,53 +2,41 @@
 declare(strict_types=1);
 namespace App\Module\Sale\Entity\Order;
 
-use Doctrine\ORM\EntityManager;
 use App\Module\Sale\Entity\Exception\NotFoundEntityException;
 
-class OrderRepository
+interface OrderRepository
 {
 
-	private $em;
+	/**
+	* @param int $id
+	* @return Order
+	* @throws NotFoundEntityException
+	**/
+	public function getById(int $id): Order;
 
-	private $repository;
 
-	public function __construct(EntityManager $em)
-	{
-		$this->em = $em;
-		$this->repository = $em->getRepository(Order::class);
-	}
+	/**
+	* @param int $id
+	* @return Order|null
+	**/
+	public function findById(int $id): ?Order;
 
-	public function getById(int $id): Order
-	{
-		$order = $this->findById($id);
+	/**
+	* @param Order $order
+	* @return void
+	**/
+	public function add(Order $order): void;
 
-        if(!$order){
-            throw new NotFoundEntityException('Order not found.');
-        }
-        
-        return $order;
-	}
+	/**
+	* @param Order $order
+	* @return void
+	**/
+	public function save(Order $order): void;
 
-	public function findById(int $id): ?Order
-	{
-		return $this->repository->find($id) ?: null;
-	}
-
-	public function add(Order $order): void
-	{
-		$this->em->persist($order);
-		$this->em->flush($order);
-	}
-
-	public function save(Order $order): void
-	{
-		$this->em->flush($order);
-	}
-
-	public function remove(Order $order): void
-	{
-		$this->em->remove($order);
-		$this->em->flush($order);
-	}
+	/**
+	* @param Order $order
+	* @return void
+	**/
+	public function remove(Order $order): void;
 	
 }

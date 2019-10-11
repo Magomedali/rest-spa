@@ -1,7 +1,9 @@
 <?php
 
-use App\Module\Sale\Entity\Product;
-use App\Module\Sale\Entity\Order;
+use App\Module\Sale\Repository\Product;
+use App\Module\Sale\Repository\Order;
+use App\Module\Sale\Entity\Order\OrderRepository;
+use App\Module\Sale\Entity\Product\ProductRepository;
 use Doctrine\DBAL\Connection;
 
 return [
@@ -10,6 +12,8 @@ return [
             Doctrine\ORM\EntityManagerInterface::class => ContainerInteropDoctrine\EntityManagerFactory::class,
             Doctrine\ORM\EntityManager::class => ContainerInteropDoctrine\EntityManagerFactory::class,
             Connection::class => ContainerInteropDoctrine\ConnectionFactory::class,
+            ProductRepository::class=>Infrastructure\App\Module\Sale\Repository\Product\ProductRepositoryFactory::class,
+            OrderRepository::class=>Infrastructure\App\Module\Sale\Repository\Order\OrderRepositoryFactory::class
         ],
     ],
     'doctrine' => [
